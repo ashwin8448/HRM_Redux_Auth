@@ -1,29 +1,39 @@
 import HeaderWrapper from "./header.ts";
-import StyledLink from "./../StyledLink";
-import { useState } from "react";
-import Tooltip from "../Tooltip/Tooltip.tsx";
+import Button from "../Button/Button.tsx";
+import useAuth from "../../pages/Login/useAuth.ts";
+import logo from "../../assets/favicon.png";
+import { useNavigate } from "react-router-dom";
+import TooltipComponent from "../Tooltip/Tooltip.tsx";
+import { H1Styles } from "../../core/constants/components/text/textStyledComponents.ts";
 
 function Header() {
-    //tooltip on hovering skills
-    const [hover, setHover] = useState(false);
-    const handleMouseEnter = () => {
-        setHover(true);
-    };
-    const handleMouseLeave = () => {
-        setHover(false);
-    };
+  const navigate = useNavigate();
+  const { user, logout } = useAuth();
 
-    return (
-        <HeaderWrapper>
-            <div className="header-content">
-                <StyledLink to="/">
-                    <span className="logo" onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
-                        <h1 className="page-title">HRM</h1>
-                        {hover && <Tooltip message="Go to homepage" />}
-                    </span>
-                </StyledLink>
-            </div>
-        </HeaderWrapper>
-    );
+  
+const logoElement = (
+  <H1Styles><img className="logo" src={logo} alt="" onClick={() => navigate("/")} /></H1Styles>
+);
+
+  return (
+    <HeaderWrapper>
+      <div className="header-content global-width">
+        {user.isAuthenticated ? (
+          <TooltipComponent title="Go to homepage">{logoElement}</TooltipComponent>
+        ) : (
+           logoElement 
+        )}
+        {user.isAuthenticated && (
+          <Button
+            onClick={() => {
+              logout();
+            }}
+          >
+            Logout
+          </Button>
+        )}
+      </div>
+    </HeaderWrapper>
+  );
 }
 export default Header;

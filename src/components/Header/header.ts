@@ -1,8 +1,9 @@
 import styled from "styled-components";
 import colors from "../../core/constants/colors";
+import { fontSizes } from "../../core/constants/fontStyles";
 
 const HeaderWrapper = styled.header`
-  background-color:  ${colors.WHITE_COLOR};
+  background-color: ${colors.WHITE_COLOR};
   border-bottom: 1px solid ${colors.LIGHT_GRAY_COLOR};
   width: 100%;
 
@@ -14,8 +15,14 @@ const HeaderWrapper = styled.header`
     justify-content: space-between;
     align-items: center;
   }
-  .logo{
-    position:relative
+  
+  h1{
+    font-size: ${fontSizes["--font-size-lg"]};
+  }
+  .logo {
+    width: 50px;
+    height: auto;
+    cursor: pointer;
   }
 `;
 export default HeaderWrapper;
